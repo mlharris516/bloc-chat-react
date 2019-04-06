@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 
 class User extends Component {
+    constructor(props) {
+        super(props);
+        this.signIn = this.signIn.bind(this);
+        this.signOut = this.signOut.bind(this);
+        }
 
     componentDidMount() {
         this.props.firebase.auth().onAuthStateChanged( user => {this.props.setUser(user);
@@ -25,7 +30,7 @@ class User extends Component {
         return (
             <section className="user-display">
                 <div>
-                    { this.props.user ? this.props.user.displayName : '' }
+                    { this.props.user ? this.props.user.displayName : 'Guest' }
                 </div>
                 <button className="sign-in-out" onClick={ this.props.user ? this.signOut.bind(this) : this.signIn.bind(this) }>
                     <span>Sign { this.props.user ? 'out' : 'in' }</span>

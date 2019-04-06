@@ -28,6 +28,7 @@ class RoomList extends Component {
         this.roomsRef.push({
             name: newRoomName,
             createdAt: Date.now(),
+            roomId: this.props.activeRoom.key,
         });
 
         this.setState({ newRoomName: '' });
@@ -35,6 +36,7 @@ class RoomList extends Component {
 
 
     handleChange(e) {
+        e.preventDefault();
         this.setState({ newRoomName: e.target.value });
     }
 
@@ -46,14 +48,15 @@ class RoomList extends Component {
     render() { 
         return (
             <section className="room-list">
-                <h2>Room List</h2>
-                {this.state.rooms.map( room =>
-                <li key={room.key}>
-                    <button className="room-name" onClick={ () => this.props.setActiveRoom(room) }>
-                    {room.name}</button>
-                </li>
-                )}
+                <ul id="room-list">
+                    {this.state.rooms.map( (room) => (
+                        <li key={room.key}>
+                            <button className="room-name" onClick={ () => this.props.setActiveRoom(room)}>
+                            {room.name}</button>
+                        </li>
+                    ))}
 
+                </ul>        
             <form id="create-room" onSubmit={ (e) => {this.handleSubmit(e) } }>
                 <input type="text" value={this.state.newRoomName} onChange={ this.handleChange.bind(this) } name="newRoomName" placeholder="New Room"/>
                 <input type="submit" value="+"/>
